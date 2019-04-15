@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour {
 		if (myTime > rateTime) {
 
 			Vector2 r = Random.insideUnitCircle.normalized * 400;
-			Instantiate (enemy,new Vector3(r.x,40,r.y ), Quaternion.Euler (new Vector3 (0, Random.Range (0.0f, 360.0f),0)));
+			Instantiate (enemy,new Vector3(r.x,20,r.y ), Quaternion.Euler (new Vector3 (0, Random.Range (0.0f, 360.0f),0)));
 			myTime -= rateTime;
 		}
 	}
