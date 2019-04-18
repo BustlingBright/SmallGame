@@ -71,7 +71,8 @@ public class PlayerControl : MonoBehaviour {
         skill2[0] = GameObject.Find("PlayerBlue/1");
         skill2[1] = GameObject.Find("skill222");
 
-        offect = skill2[1].transform.position - skill2[0].transform.position;
+        skill2[1].transform.SetParent(skill1.transform);
+
 
         for (int i = 0; i < skill2.Length; i++)
         {
@@ -116,6 +117,7 @@ public class PlayerControl : MonoBehaviour {
             {
                 skill2[i].SetActive(false);
             }
+            skill2[1].transform.SetParent(skill1.transform);
         }
         else
         {
@@ -128,7 +130,7 @@ public class PlayerControl : MonoBehaviour {
             //////////////////////////////////////////////
             /////////////////////////////////////////////
             /////////////////////////////////////////////有问题。武器切换。位置不对
-            skill2[1].transform.position = skill2[0].transform.position + offect;
+            skill2[1].transform.SetParent(null);
         }
     }
 

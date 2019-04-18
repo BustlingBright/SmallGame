@@ -5,6 +5,8 @@ public class LevelManager : MonoBehaviour {
 	static public LevelManager Im;
 	public Transform player;
 	public GameObject enemy;
+    public GameObject ememyNomal;
+    public GameObject enemyBig;
 
 	public float rateTime = 2;
 	float myTime;
@@ -13,14 +15,22 @@ public class LevelManager : MonoBehaviour {
 		Im = this;
 	}
 	
+    void CreateEnemy(float time,GameObject monster)
+    {
+        time += Time.deltaTime;
+        if (time > rateTime)
+        {
+
+            Vector2 r = Random.insideUnitCircle.normalized * 400;
+            Instantiate(monster, new Vector3(r.x, 20, r.y), Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 360.0f), 0)));
+            time -= rateTime;
+        }
+    }
+
 	// Update is called once per frame
 	void Update () {
-		myTime += Time.deltaTime;
-		if (myTime > rateTime) {
-
-			Vector2 r = Random.insideUnitCircle.normalized * 400;
-			Instantiate (enemy,new Vector3(r.x,20,r.y ), Quaternion.Euler (new Vector3 (0, Random.Range (0.0f, 360.0f),0)));
-			myTime -= rateTime;
-		}
-	}
+        CreateEnemy(2, enemy);
+        CreateEnemy(4, ememyNomal);
+        CreateEnemy(6, enemyBig);
+    }
 }
