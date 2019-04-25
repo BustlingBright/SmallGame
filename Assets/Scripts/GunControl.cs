@@ -10,7 +10,6 @@ public class GunControl : MonoBehaviour {
     private float _nowTime = 0f;
     private AudioSource _audio;
     //子弹预制体
-    private GameObject _buttleClone;
 
     Ray _hitRay;
 
@@ -57,7 +56,6 @@ public class GunControl : MonoBehaviour {
             {
                 RaycastHit hitInfo;
                 _hitRay = new Ray(_gunPoint.position, _gunPoint.forward * 800);
-                Debug.DrawRay(_gunPoint.position, _gunPoint.forward * 800, Color.black);
                 if (Physics.Raycast(_hitRay, out hitInfo))
                 {
                     if (hitInfo.collider.tag == "Enemy")

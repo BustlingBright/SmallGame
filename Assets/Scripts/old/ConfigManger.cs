@@ -55,7 +55,6 @@ class ConfigManger
                 _config.playerPosition = new Vector3(float.Parse(tempConfig[2]), float.Parse(tempConfig[3]), float.Parse(tempConfig[4]));
                 _config.playerSkillPosition= new Vector3(float.Parse(tempConfig[5]), float.Parse(tempConfig[6]), float.Parse(tempConfig[7]));
                 _config.monsterPosition= new Vector3(float.Parse(tempConfig[8]), float.Parse(tempConfig[9]), float.Parse(tempConfig[10]));
-                //////////未做
                 _config.cameraFirstPosition= new Vector3(float.Parse(tempConfig[11]), float.Parse(tempConfig[12]), float.Parse(tempConfig[13]));
                 _config.cameraFirstRotation= new Vector3(float.Parse(tempConfig[14]), float.Parse(tempConfig[15]), float.Parse(tempConfig[16]));
                 _config.cameraLastPosition= new Vector3(float.Parse(tempConfig[17]), float.Parse(tempConfig[18]), float.Parse(tempConfig[19])); 

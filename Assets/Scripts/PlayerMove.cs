@@ -13,7 +13,7 @@ namespace HutongGames.PlayMaker.Actions
         private bl_Joystick _right;
 
         private Camera _camera;
-        private Vector3 _cameraOffect;
+
 
         GameObject _mygo;
         PlayMakerFSM _fsm;
@@ -28,8 +28,7 @@ namespace HutongGames.PlayMaker.Actions
 
             _mygo = Fsm.GetOwnerDefaultTarget(gameObject);
             _fsm = _mygo.GetComponent<PlayMakerFSM>();
-            _camera = Camera.main;
-            _cameraOffect = _camera.transform.position - _mygo.transform.position;
+           
 
         }
 
@@ -54,7 +53,7 @@ namespace HutongGames.PlayMaker.Actions
         public override void OnLateUpdate()
         {
             base.OnLateUpdate();
-            _camera.transform.position = _mygo.transform.position + _cameraOffect;
+           
         }
         public override void OnFixedUpdate()
         {

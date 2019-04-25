@@ -10,9 +10,10 @@ public class LevelManager : MonoBehaviour {
     private GameObject enemy1;
     private GameObject enemy2;
     private new Transform camera;
-    private Transform mapCamera; 
+    private Transform mapCamera;
+    private Vector3 _cameraOffect;
 
-	public float rateTime1 = 0;
+    public float rateTime1 = 0;
     public float rateTime2 = 0;
     public float rateTime3 = 0;
 
@@ -22,8 +23,7 @@ public class LevelManager : MonoBehaviour {
     private bool isCreate = false;
 	void Awake ()
     {
-        levelId = 1001;
-        config = ConfigManger.Instance.GetConfig(levelId);
+        levelId = 10001;
         camera = Camera.main.transform;
         mapCamera = GameObject.Find("MapCamera").transform;
         Init();
@@ -32,6 +32,7 @@ public class LevelManager : MonoBehaviour {
     void Init()
     {
         isCreate = false;
+        config = ConfigManger.Instance.GetConfig(levelId);
         for (int i = 0; i < monsters.Count; i++)
         {
             if(monsters[i]!=null)
@@ -46,17 +47,21 @@ public class LevelManager : MonoBehaviour {
         skill2.position = config.playerSkillPosition;
         skill2.rotation = Quaternion.identity;
         ///怪物类型
-        enemy0 = Resources.Load("Role/" + config.mapName + "/0") as GameObject;
-        enemy1 = Resources.Load("Role/" + config.mapName + "/1") as GameObject;
-        enemy2 = Resources.Load("Role/" + config.mapName + "/2") as GameObject;
+        enemy0 = Resources.Load("Role/" + config.mapName + "0") as GameObject;
+        enemy1 = Resources.Load("Role/" + config.mapName + "1") as GameObject;
+        enemy2 = Resources.Load("Role/" + config.mapName + "2") as GameObject;
         mapCamera.position = config.mapCameraPosition;
+        camera.transform.position = config.cameraLastPosition;
+        camera.transform.rotation = Quaternion.Euler(config.cameraLastRotation);
+
+        _cameraOffect = camera.transform.position - player.transform.position;
         isCreate = true;
     }
 
     public void LevelUp()
     {
         isCreate = false;
-        if(levelId<1005)
+        if(levelId<10005)
         {
             levelId++;
             Init();
@@ -64,7 +69,15 @@ public class LevelManager : MonoBehaviour {
 
     }
 
-	
+
+    private void FixedUpdate()
+    {
+       if(isCreate)
+        {
+            camera.transform.position = player.transform.position + _cameraOffect;
+        }
+    }
+
     void CreateEnemy1(float time,GameObject monster)
     {
         rateTime1 += Time.deltaTime;
@@ -106,6 +119,10 @@ public class LevelManager : MonoBehaviour {
             CreateEnemy1(2, enemy0);
             CreateEnemy2(4, enemy1);
             CreateEnemy3(6, enemy2);
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                LevelUp();
+            }
         }
     }
 }
