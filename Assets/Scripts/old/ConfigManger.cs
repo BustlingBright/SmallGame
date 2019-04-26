@@ -15,6 +15,7 @@ struct Config
     public Vector3 cameraLastPosition;
     public Vector3 cameraLastRotation;
     public Vector3 mapCameraPosition;
+    public Vector3 doorPosition;
 }
 
 
@@ -60,6 +61,7 @@ class ConfigManger
                 _config.cameraLastPosition= new Vector3(float.Parse(tempConfig[17]), float.Parse(tempConfig[18]), float.Parse(tempConfig[19])); 
                 _config.cameraLastRotation= new Vector3(float.Parse(tempConfig[20]), float.Parse(tempConfig[21]), float.Parse(tempConfig[22]));
                 _config.mapCameraPosition= new Vector3(float.Parse(tempConfig[23]), float.Parse(tempConfig[24]), float.Parse(tempConfig[25]));
+                _config.doorPosition= new Vector3(float.Parse(tempConfig[26]), float.Parse(tempConfig[27]), float.Parse(tempConfig[28]));
                 config.Add(_config.id, _config);
             }
         }

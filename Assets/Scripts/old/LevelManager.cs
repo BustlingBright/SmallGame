@@ -4,6 +4,19 @@ using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
 
+    private static LevelManager instance;
+    public static LevelManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+
+    private LevelManager() { }
+
+
 	public Transform player;
     public Transform skill2;
 	private GameObject enemy0;
@@ -12,6 +25,8 @@ public class LevelManager : MonoBehaviour {
     private new Transform camera;
     private Transform mapCamera;
     private Vector3 _cameraOffect;
+    private GameObject door;
+    private bool doorOpen = false;
 
     public float rateTime1 = 0;
     public float rateTime2 = 0;
@@ -21,18 +36,24 @@ public class LevelManager : MonoBehaviour {
     private Config config;
     private List<GameObject> monsters = new List<GameObject>();
     private bool isCreate = false;
+
 	void Awake ()
     {
+        instance = this;
+        TimeManger.Instance.Init();
         levelId = 10001;
         camera = Camera.main.transform;
         mapCamera = GameObject.Find("MapCamera").transform;
         Init();
+
+
 	}
 
     void Init()
     {
         isCreate = false;
         config = ConfigManger.Instance.GetConfig(levelId);
+        
         for (int i = 0; i < monsters.Count; i++)
         {
             if(monsters[i]!=null)
@@ -50,6 +71,7 @@ public class LevelManager : MonoBehaviour {
         enemy0 = Resources.Load("Role/" + config.mapName + "0") as GameObject;
         enemy1 = Resources.Load("Role/" + config.mapName + "1") as GameObject;
         enemy2 = Resources.Load("Role/" + config.mapName + "2") as GameObject;
+        door = Resources.Load("Door/" + config.mapName) as GameObject;
         mapCamera.position = config.mapCameraPosition;
         camera.transform.position = config.cameraLastPosition;
         camera.transform.rotation = Quaternion.Euler(config.cameraLastRotation);
@@ -69,12 +91,20 @@ public class LevelManager : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// 设置传送门
+    /// </summary>
+    private void SetDoor()
+    {
+        Instantiate(door, config.doorPosition, Quaternion.identity);
+    }
 
     private void FixedUpdate()
     {
        if(isCreate)
         {
             camera.transform.position = player.transform.position + _cameraOffect;
+            TimeManger.Instance.Update(Time.deltaTime);
         }
     }
 
@@ -119,10 +149,15 @@ public class LevelManager : MonoBehaviour {
             CreateEnemy1(2, enemy0);
             CreateEnemy2(4, enemy1);
             CreateEnemy3(6, enemy2);
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (TimeManger.Instance.NowGameTime > 60)
             {
-                LevelUp();
+                if(!doorOpen)
+                {
+                    doorOpen = true;
+                    SetDoor();
+                }
             }
+    
         }
     }
 }
