@@ -33,7 +33,7 @@ namespace HutongGames.PlayMaker.Actions
 
 #if UNITY_5_OR_NEWER
 		[UIHint(UIHint.Variable)]
-		[Tooltip("The full path hash for this state.")]
+		[Tooltip("The full levelConfigPath hash for this state.")]
 		public FsmInt fullPathHash;
 		
 		[UIHint(UIHint.Variable)]

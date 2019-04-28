@@ -18,7 +18,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The reference options of the Scene")]
 		public SceneReferenceOptions sceneReference;
 
-		[Tooltip("The name of the scene to activate. The given sceneName can either be the last part of the path, without .unity extension or the full path still without the .unity extension")]
+		[Tooltip("The name of the scene to activate. The given sceneName can either be the last part of the levelConfigPath, without .unity extension or the full levelConfigPath still without the .unity extension")]
 		public FsmString sceneByName;
 
 		[Tooltip("The build index of the scene to activate.")]

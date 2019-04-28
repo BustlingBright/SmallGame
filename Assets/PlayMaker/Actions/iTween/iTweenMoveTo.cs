@@ -47,16 +47,16 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("Restricts rotation to the supplied axis only.")]
 		public iTweenFsmAction.AxisRestriction axis = iTweenFsmAction.AxisRestriction.none;
 		[ActionSection("Path")]
-		[Tooltip("Whether to automatically generate a curve from the GameObject's current position to the beginning of the path. True by default.")]
+		[Tooltip("Whether to automatically generate a curve from the GameObject's current position to the beginning of the levelConfigPath. True by default.")]
 		public FsmBool moveToPath;
-		[Tooltip("How much of a percentage (from 0 to 1) to look ahead on a path to influence how strict Orient To Path is and how much the object will anticipate each curve.")]
+		[Tooltip("How much of a percentage (from 0 to 1) to look ahead on a levelConfigPath to influence how strict Orient To Path is and how much the object will anticipate each curve.")]
 		public FsmFloat lookAhead;
 		[CompoundArray("Path Nodes", "Transform", "Vector")]
-		[Tooltip("A list of objects to draw a Catmull-Rom spline through for a curved animation path.")]
+		[Tooltip("A list of objects to draw a Catmull-Rom spline through for a curved animation levelConfigPath.")]
 		public FsmGameObject[] transforms;
-		[Tooltip("A list of positions to draw a Catmull-Rom through for a curved animation path. If Transform is defined, this value is added as a local offset.")]
+		[Tooltip("A list of positions to draw a Catmull-Rom through for a curved animation levelConfigPath. If Transform is defined, this value is added as a local offset.")]
 		public FsmVector3[] vectors;
-		[Tooltip("Reverse the path so object moves from End to Start node.")]
+		[Tooltip("Reverse the levelConfigPath so object moves from End to Start node.")]
 		public FsmBool reverse;
 			
 		private Vector3[] tempVct3;
@@ -168,7 +168,7 @@ namespace HutongGames.PlayMaker.Actions
 						}
 					}
 				}
-				hash.Add("path", tempVct3);
+				hash.Add("levelConfigPath", tempVct3);
 				hash.Add("movetopath", moveToPath.IsNone ? true : moveToPath.Value);
 				hash.Add("lookahead", lookAhead.IsNone ? 1f : lookAhead.Value);
 			}

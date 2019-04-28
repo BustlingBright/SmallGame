@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour {
     public float rateTime3 = 0;
 
     private int levelId;
-    private Config config;
+    private LevelConfig config;
     private List<GameObject> monsters = new List<GameObject>();
     private bool isCreate = false;
 
@@ -52,7 +52,7 @@ public class LevelManager : MonoBehaviour {
     void Init()
     {
         isCreate = false;
-        config = ConfigManger.Instance.GetConfig(levelId);
+        config = ConfigManger.Instance.GetLevelConfig(levelId);
         
         for (int i = 0; i < monsters.Count; i++)
         {
@@ -116,6 +116,7 @@ public class LevelManager : MonoBehaviour {
             Vector2 r = Random.insideUnitCircle.normalized * 400;
             GameObject g= Instantiate(monster, new Vector3(r.x+config.monsterPosition.x, config.monsterPosition.y, r.y+config.monsterPosition.z), Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 360.0f), 0)));
             rateTime1 =0;
+
             monsters.Add(g);
         }
     }

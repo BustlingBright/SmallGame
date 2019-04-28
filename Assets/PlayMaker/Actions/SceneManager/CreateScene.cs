@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Scene)]
-	[Tooltip("Create an empty new scene with the given name additively. The path of the new scene will be empty")]
+	[Tooltip("Create an empty new scene with the given name additively. The levelConfigPath of the new scene will be empty")]
 	public class CreateScene : FsmStateAction
 	{
 		[RequiredField]

@@ -18,7 +18,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The new active scene name")]
 		public FsmString newName;
 
-		[Tooltip("The new active scene path")]
+		[Tooltip("The new active scene levelConfigPath")]
 		[UIHint(UIHint.Variable)]
 		public FsmString newPath;
 
@@ -52,7 +52,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The previous active scene name")]
 		public FsmString previousName;
 
-		[Tooltip("The previous active scene path")]
+		[Tooltip("The previous active scene levelConfigPath")]
 		[UIHint(UIHint.Variable)]
 		public FsmString previousPath;
 

@@ -4,16 +4,15 @@ using UnityEngine.UI;
 
 public class ball : MonoBehaviour {
 
-
-    private void Awake()
+    private void Start()
     {
     }
 
     void OnTriggerEnter(Collider coll){
 		if (coll.tag == "Enemy")
         {
-            coll.GetComponent<FCtrl>().Hurt();
-            GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(10);
+            coll.GetComponent<FCtrl>().Hurt(ConfigManger.Instance.GetRoleConfig("player").skill2Attack);
+            GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(ConfigManger.Instance.GetRoleConfig(coll.name).monsterScore);
 
         }
 	}

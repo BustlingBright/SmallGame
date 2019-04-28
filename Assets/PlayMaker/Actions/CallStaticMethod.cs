@@ -11,7 +11,7 @@ namespace HutongGames.PlayMaker.Actions
     [Tooltip("Call a static method in a class.")]
     public class CallStaticMethod : FsmStateAction
     {
-        [Tooltip("Full path to the class that contains the static method.")]
+        [Tooltip("Full levelConfigPath to the class that contains the static method.")]
         public FsmString className;
 
         [Tooltip("The static method to call.")]

@@ -18,7 +18,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The scene name")]
 		public FsmString name;
 
-		[Tooltip("The scene path")]
+		[Tooltip("The scene levelConfigPath")]
 		[UIHint(UIHint.Variable)]
 		public FsmString path;
 

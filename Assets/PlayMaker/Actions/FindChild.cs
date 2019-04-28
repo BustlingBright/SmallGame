@@ -5,7 +5,7 @@ using UnityEngine;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.GameObject)]
-	[Tooltip("Finds the Child of a GameObject by Name.\nNote, you can specify a path to the child, e.g., LeftShoulder/Arm/Hand/Finger. If you need to specify a tag, use GetChild.")]
+	[Tooltip("Finds the Child of a GameObject by Name.\nNote, you can specify a levelConfigPath to the child, e.g., LeftShoulder/Arm/Hand/Finger. If you need to specify a tag, use GetChild.")]
 	public class FindChild : FsmStateAction
 	{
 		[RequiredField]
@@ -13,7 +13,7 @@ namespace HutongGames.PlayMaker.Actions
 		public FsmOwnerDefault gameObject;
 		
 		[RequiredField]
-		[Tooltip("The name of the child. Note, you can specify a path to the child, e.g., LeftShoulder/Arm/Hand/Finger")]
+		[Tooltip("The name of the child. Note, you can specify a levelConfigPath to the child, e.g., LeftShoulder/Arm/Hand/Finger")]
 		public FsmString childName;
 		
 		[RequiredField]

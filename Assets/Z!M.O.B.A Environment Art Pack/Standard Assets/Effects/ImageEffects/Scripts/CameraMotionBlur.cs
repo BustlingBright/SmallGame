@@ -138,7 +138,7 @@ namespace UnityStandardAssets.ImageEffects
             maxVelocity = Mathf.Max (2.0f, maxVelocity);
 
             float _maxVelocity = maxVelocity; // calculate 'k'
-            // note: 's' is hardcoded in shaders except for DX11 path
+            // note: 's' is hardcoded in shaders except for DX11 levelConfigPath
 
             // auto DX11 fallback!
             bool fallbackFromDX11 = filterType == MotionBlurFilter.ReconstructionDX11 && dx11MotionBlurMaterial == null;

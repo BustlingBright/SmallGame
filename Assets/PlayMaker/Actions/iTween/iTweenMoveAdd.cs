@@ -30,7 +30,7 @@ namespace HutongGames.PlayMaker.Actions
 		public iTween.LoopType loopType = iTween.LoopType.none;
 		
 		public Space space = Space.World;
-//		[Tooltip("For how much of a percentage (from 0 to 1) to look ahead on a path to influence how strict 'orienttopath' is and how much the object will anticipate each curve. 0 by default")]
+//		[Tooltip("For how much of a percentage (from 0 to 1) to look ahead on a levelConfigPath to influence how strict 'orienttopath' is and how much the object will anticipate each curve. 0 by default")]
 //		public FsmFloat lookAhead;
 		[ActionSection("LookAt")]
 		[Tooltip("For whether or not the GameObject will orient to its direction of travel. False by default.")]

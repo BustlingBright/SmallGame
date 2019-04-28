@@ -9,12 +9,12 @@ using UnityEngine.SceneManagement;
 namespace HutongGames.PlayMaker.Actions
 {
 	[ActionCategory(ActionCategory.Scene)]
-	[Tooltip("Get a scene path.")]
+	[Tooltip("Get a scene levelConfigPath.")]
 	public class GetScenePath : GetSceneActionBase
 	{
 		[ActionSection("Result")]
 
-		[Tooltip("The scene path")]
+		[Tooltip("The scene levelConfigPath")]
 		[RequiredField]
 		[UIHint(UIHint.Variable)]
 		public FsmString path;

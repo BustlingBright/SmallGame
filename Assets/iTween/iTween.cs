@@ -201,7 +201,7 @@ public class iTween : MonoBehaviour{
 		public static float updateTime = 1f*updateTimePercentage;
 		//cameraFade defaults:
 		public static int cameraFadeDepth = 999999;
-		//path look ahead amount:
+		//levelConfigPath look ahead amount:
 		public static float lookAhead = .05f;
         public static bool useRealTime = false; // Added by PressPlay
 		//look direction:
@@ -1359,10 +1359,10 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="Transform"/> or <see cref="Vector3"/> for a point in space the GameObject will animate to.
 	/// </param>
 	/// <param name="path">
-	/// A <see cref="Transform[]"/> or <see cref="Vector3[]"/> for a list of points to draw a Catmull-Rom through for a curved animation path.
+	/// A <see cref="Transform[]"/> or <see cref="Vector3[]"/> for a list of points to draw a Catmull-Rom through for a curved animation levelConfigPath.
 	/// </param>
 	/// <param name="movetopath">
-	/// A <see cref="System.Boolean"/> for whether to automatically generate a curve from the GameObject's current position to the beginning of the path. True by default.
+	/// A <see cref="System.Boolean"/> for whether to automatically generate a curve from the GameObject's current position to the beginning of the levelConfigPath. True by default.
 	/// </param>
 	/// <param name="x">
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the individual setting of the x axis.
@@ -1383,7 +1383,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the time in seconds the object will take to look at either the "looktarget" or "orienttopath".
 	/// </param>
 	/// <param name="lookahead">
-	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for how much of a percentage to look ahead on a path to influence how strict "orientopath" is.
+	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for how much of a percentage to look ahead on a levelConfigPath to influence how strict "orientopath" is.
 	/// </param>
 	/// <param name="axis">
 	/// A <see cref="System.String"/>. Restricts rotation to the supplied axis only.
@@ -1476,10 +1476,10 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="Transform"/> or <see cref="Vector3"/> for a point in space the GameObject will animate to.
 	/// </param>
 	/// <param name="path">
-	/// A <see cref="Transform[]"/> or <see cref="Vector3[]"/> for a list of points to draw a Catmull-Rom through for a curved animation path.
+	/// A <see cref="Transform[]"/> or <see cref="Vector3[]"/> for a list of points to draw a Catmull-Rom through for a curved animation levelConfigPath.
 	/// </param>
 	/// <param name="movetopath">
-	/// A <see cref="System.Boolean"/> for whether to automatically generate a curve from the GameObject's current position to the beginning of the path. True by default.
+	/// A <see cref="System.Boolean"/> for whether to automatically generate a curve from the GameObject's current position to the beginning of the levelConfigPath. True by default.
 	/// </param>
 	/// <param name="x">
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the individual setting of the x axis.
@@ -1500,7 +1500,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the time in seconds the object will take to look at either the "looktarget" or "orienttopath".
 	/// </param>
 	/// <param name="lookahead">
-	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for how much of a percentage to look ahead on a path to influence how strict "orientopath" is.
+	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for how much of a percentage to look ahead on a levelConfigPath to influence how strict "orientopath" is.
 	/// </param>
 	/// <param name="islocal">
 	/// A <see cref="System.Boolean"/> for whether to animate in world space or relative to the parent. False by default.
@@ -1560,15 +1560,15 @@ public class iTween : MonoBehaviour{
 			tempIsLocal = Defaults.isLocal;	
 		}
 		
-		if(args.Contains("path")){
+		if(args.Contains("levelConfigPath")){
 			Vector3[] fromPath;
 			Vector3[] suppliedPath;
-			if(args["path"].GetType() == typeof(Vector3[])){
-				Vector3[] temp = (Vector3[])args["path"];
+			if(args["levelConfigPath"].GetType() == typeof(Vector3[])){
+				Vector3[] temp = (Vector3[])args["levelConfigPath"];
 				suppliedPath=new Vector3[temp.Length];
 				Array.Copy(temp,suppliedPath, temp.Length);	
 			}else{
-				Transform[] temp = (Transform[])args["path"];
+				Transform[] temp = (Transform[])args["levelConfigPath"];
 				suppliedPath = new Vector3[temp.Length];
 				for (int i = 0; i < temp.Length; i++) {
 					suppliedPath[i]=temp[i].position;
@@ -1584,14 +1584,14 @@ public class iTween : MonoBehaviour{
 					fromPath[fromPath.Length-1] = target.transform.position;
 					target.transform.position=fromPath[0];
 				}
-				args["path"]=fromPath;
+				args["levelConfigPath"]=fromPath;
 			}else{
 				if(tempIsLocal){
 					target.transform.localPosition=suppliedPath[0];
 				}else{
 					target.transform.position=suppliedPath[0];
 				}
-				args["path"]=suppliedPath;
+				args["levelConfigPath"]=suppliedPath;
 			}
 		}else{
 			Vector3 tempPosition;
@@ -3158,11 +3158,11 @@ public class iTween : MonoBehaviour{
 			case "move":
 				switch (method) {
 					case "to":
-						//using a path?
-						if(tweenArguments.Contains("path")){
+						//using a levelConfigPath?
+						if(tweenArguments.Contains("levelConfigPath")){
 							GenerateMoveToPathTargets();
 							apply = new ApplyTween(ApplyMoveToPathTargets);
-						}else{ //not using a path?
+						}else{ //not using a levelConfigPath?
 							GenerateMoveToTargets();
 							apply = new ApplyTween(ApplyMoveToTargets);
 						}
@@ -3510,21 +3510,21 @@ public class iTween : MonoBehaviour{
 	void GenerateMoveToPathTargets(){
 		 Vector3[] suppliedPath;
 		
-		//create and store path points:
-		if(tweenArguments["path"].GetType() == typeof(Vector3[])){
-			Vector3[] temp = (Vector3[])tweenArguments["path"];
+		//create and store levelConfigPath points:
+		if(tweenArguments["levelConfigPath"].GetType() == typeof(Vector3[])){
+			Vector3[] temp = (Vector3[])tweenArguments["levelConfigPath"];
 			//if only one point is supplied fall back to MoveTo's traditional use since we can't have a curve with one value:
 			if(temp.Length==1){
-				Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
+				Debug.LogError("iTween Error: Attempting a levelConfigPath movement with MoveTo requires an array of more than 1 entry!");
 				Dispose();
 			}
 			suppliedPath=new Vector3[temp.Length];
 			Array.Copy(temp,suppliedPath, temp.Length);
 		}else{
-			Transform[] temp = (Transform[])tweenArguments["path"];
+			Transform[] temp = (Transform[])tweenArguments["levelConfigPath"];
 			//if only one point is supplied fall back to MoveTo's traditional use since we can't have a curve with one value:
 			if(temp.Length==1){
-				Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
+				Debug.LogError("iTween Error: Attempting a levelConfigPath movement with MoveTo requires an array of more than 1 entry!");
 				Dispose();
 			}
 			suppliedPath = new Vector3[temp.Length];
@@ -3533,7 +3533,7 @@ public class iTween : MonoBehaviour{
 			}
 		}
 		
-		//do we need to plot a path to get to the beginning of the supplied path?		
+		//do we need to plot a levelConfigPath to get to the beginning of the supplied levelConfigPath?		
 		bool plotStart;
 		int offset;
 		if(transform.position != suppliedPath[0]){
@@ -3549,7 +3549,7 @@ public class iTween : MonoBehaviour{
 			offset=2;
 		}				
 
-		//build calculated path:
+		//build calculated levelConfigPath:
 		vector3s = new Vector3[suppliedPath.Length+offset];
 		if(plotStart){
 			vector3s[1]=transform.position;
@@ -3558,7 +3558,7 @@ public class iTween : MonoBehaviour{
 			offset=1;
 		}		
 		
-		//populate calculate path;
+		//populate calculate levelConfigPath;
 		Array.Copy(suppliedPath,0,vector3s,offset,suppliedPath.Length);
 		
 		//populate start and end control points:
@@ -3576,7 +3576,7 @@ public class iTween : MonoBehaviour{
 			Array.Copy(tmpLoopSpline,vector3s,tmpLoopSpline.Length);
 		}
 		
-		//create Catmull-Rom path:
+		//create Catmull-Rom levelConfigPath:
 		path = new CRSpline(vector3s);
 		
 		//need for speed?
@@ -3617,7 +3617,7 @@ public class iTween : MonoBehaviour{
 			}
 		}
 		
-		//handle orient to path request:
+		//handle orient to levelConfigPath request:
 		if(tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"]){
 			tweenArguments["looktarget"] = vector3s[1];
 		}
@@ -3665,7 +3665,7 @@ public class iTween : MonoBehaviour{
 		vector3s[5] = transform.position;
 		transform.position=vector3s[0];
 		
-		//handle orient to path request:
+		//handle orient to levelConfigPath request:
 		if(tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"]){
 			tweenArguments["looktarget"] = vector3s[1];
 		}
@@ -4177,7 +4177,7 @@ public class iTween : MonoBehaviour{
 			transform.position=path.Interp(Mathf.Clamp(t,0,1));	
 		}
 		
-		//handle orient to path request:
+		//handle orient to levelConfigPath request:
 		if(tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"]){
 			
 			//plot a point slightly ahead in the interpolation by pushing the percentage forward using the default lookahead value:
@@ -4191,7 +4191,7 @@ public class iTween : MonoBehaviour{
 			tLook = ease(0,1, Mathf.Min(1f, percentage+lookAheadAmount)); 
 			
 			//locate new leading point with a clamp as stated above:
-			//Vector3 lookDistance = path.Interp(Mathf.Clamp(tLook,0,1)) - transform.position;
+			//Vector3 lookDistance = levelConfigPath.Interp(Mathf.Clamp(tLook,0,1)) - transform.position;
 			tweenArguments["looktarget"] = path.Interp(Mathf.Clamp(tLook,0,1));
 		}
 		
@@ -5248,7 +5248,7 @@ public class iTween : MonoBehaviour{
 		vector3s[3].y=Mathf.SmoothDamp(vector3s[0].y,vector3s[1].y,ref vector3s[2].y,time);
 		vector3s[3].z=Mathf.SmoothDamp(vector3s[0].z,vector3s[1].z,ref vector3s[2].z,time);
 			
-		//handle orient to path:
+		//handle orient to levelConfigPath:
 		if(args.Contains("orienttopath") && (bool)args["orienttopath"]){
 			args["looktarget"] = vector3s[3];
 		}
@@ -5391,7 +5391,7 @@ public class iTween : MonoBehaviour{
 #region #7 External Utilities
 	
 	/// <summary>
-	/// Returns the length of a curved path drawn through the provided array of Transforms.
+	/// Returns the length of a curved levelConfigPath drawn through the provided array of Transforms.
 	/// </summary>
 	/// <returns>
 	/// A <see cref="System.Single"/>
@@ -5403,7 +5403,7 @@ public class iTween : MonoBehaviour{
 		Vector3[] suppliedPath = new Vector3[path.Length];
 		float pathLength = 0;
 		
-		//create and store path points:
+		//create and store levelConfigPath points:
 		for (int i = 0; i < path.Length; i++) {
 			suppliedPath[i]=path[i].position;
 		}
@@ -5424,7 +5424,7 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Returns the length of a curved path drawn through the provided array of Vector3s.
+	/// Returns the length of a curved levelConfigPath drawn through the provided array of Vector3s.
 	/// </summary>
 	/// <returns>
 	/// The length.
@@ -5471,7 +5471,7 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Puts a GameObject on a path at the provided percentage 
+	/// Puts a GameObject on a levelConfigPath at the provided percentage 
 	/// </summary>
 	/// <param name="target">
 	/// A <see cref="GameObject"/>
@@ -5487,7 +5487,7 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Puts a GameObject on a path at the provided percentage 
+	/// Puts a GameObject on a levelConfigPath at the provided percentage 
 	/// </summary>
 	/// <param name="target">
 	/// A <see cref="Transform"/>
@@ -5503,7 +5503,7 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	/// <summary>
-	/// Puts a GameObject on a path at the provided percentage 
+	/// Puts a GameObject on a levelConfigPath at the provided percentage 
 	/// </summary>
 	/// <param name="target">
 	/// A <see cref="GameObject"/>
@@ -5515,7 +5515,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Single"/>
 	/// </param>
 	public static void PutOnPath(GameObject target, Transform[] path, float percent){
-		//create and store path points:
+		//create and store levelConfigPath points:
 		Vector3[] suppliedPath = new Vector3[path.Length];
 		for (int i = 0; i < path.Length; i++) {
 			suppliedPath[i]=path[i].position;
@@ -5524,7 +5524,7 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	/// <summary>
-	/// Puts a GameObject on a path at the provided percentage 
+	/// Puts a GameObject on a levelConfigPath at the provided percentage 
 	/// </summary>
 	/// <param name="target">
 	/// A <see cref="Transform"/>
@@ -5536,7 +5536,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Single"/>
 	/// </param>
 	public static void PutOnPath(Transform target, Transform[] path, float percent){
-		//create and store path points:
+		//create and store levelConfigPath points:
 		Vector3[] suppliedPath = new Vector3[path.Length];
 		for (int i = 0; i < path.Length; i++) {
 			suppliedPath[i]=path[i].position;
@@ -5545,7 +5545,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// Returns a Vector3 position on a path at the provided percentage  
+	/// Returns a Vector3 position on a levelConfigPath at the provided percentage  
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
@@ -5557,7 +5557,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="Vector3"/>
 	/// </returns>
 	public static Vector3 PointOnPath(Transform[] path, float percent){
-		//create and store path points:
+		//create and store levelConfigPath points:
 		Vector3[] suppliedPath = new Vector3[path.Length];
 		for (int i = 0; i < path.Length; i++) {
 			suppliedPath[i]=path[i].position;
@@ -5761,7 +5761,7 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	/// <summary>
-	/// Returns a Vector3 position on a path at the provided percentage  
+	/// Returns a Vector3 position on a levelConfigPath at the provided percentage  
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3[]"/>
@@ -5777,7 +5777,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// When called from an OnDrawGizmos() function it will draw a curved path through the provided array of Vector3s.
+	/// When called from an OnDrawGizmos() function it will draw a curved levelConfigPath through the provided array of Vector3s.
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3s[]"/>
@@ -5789,7 +5789,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// When called from an OnDrawGizmos() function it will draw a curved path through the provided array of Vector3s.
+	/// When called from an OnDrawGizmos() function it will draw a curved levelConfigPath through the provided array of Vector3s.
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3s[]"/>
@@ -5804,14 +5804,14 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// When called from an OnDrawGizmos() function it will draw a curved path through the provided array of Transforms.
+	/// When called from an OnDrawGizmos() function it will draw a curved levelConfigPath through the provided array of Transforms.
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
 	/// </param>
 	public static void DrawPath(Transform[] path) {
 		if(path.Length>0){
-			//create and store path points:
+			//create and store levelConfigPath points:
 			Vector3[] suppliedPath = new Vector3[path.Length];
 			for (int i = 0; i < path.Length; i++) {
 				suppliedPath[i]=path[i].position;
@@ -5822,7 +5822,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// When called from an OnDrawGizmos() function it will draw a curved path through the provided array of Transforms.
+	/// When called from an OnDrawGizmos() function it will draw a curved levelConfigPath through the provided array of Transforms.
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
@@ -5832,7 +5832,7 @@ public class iTween : MonoBehaviour{
 	/// </param> 
 	public static void DrawPath(Transform[] path,Color color) {
 		if(path.Length>0){
-			//create and store path points:
+			//create and store levelConfigPath points:
 			Vector3[] suppliedPath = new Vector3[path.Length];
 			for (int i = 0; i < path.Length; i++) {
 				suppliedPath[i]=path[i].position;
@@ -5843,7 +5843,7 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Vector3s with Gizmos.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Vector3s with Gizmos.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3s[]"/>
@@ -5855,7 +5855,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Vector3s with Gizmos.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Vector3s with Gizmos.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3s[]"/>
@@ -5870,14 +5870,14 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Transforms with Gizmos.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Transforms with Gizmos.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
 	/// </param>
 	public static void DrawPathGizmos(Transform[] path) {
 		if(path.Length>0){
-			//create and store path points:
+			//create and store levelConfigPath points:
 			Vector3[] suppliedPath = new Vector3[path.Length];
 			for (int i = 0; i < path.Length; i++) {
 				suppliedPath[i]=path[i].position;
@@ -5888,7 +5888,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Transforms with Gizmos.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Transforms with Gizmos.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
@@ -5898,7 +5898,7 @@ public class iTween : MonoBehaviour{
 	/// </param> 
 	public static void DrawPathGizmos(Transform[] path,Color color) {
 		if(path.Length>0){
-			//create and store path points:
+			//create and store levelConfigPath points:
 			Vector3[] suppliedPath = new Vector3[path.Length];
 			for (int i = 0; i < path.Length; i++) {
 				suppliedPath[i]=path[i].position;
@@ -5909,7 +5909,7 @@ public class iTween : MonoBehaviour{
 	}	
 
 	/// <summary>
-	/// Draws a curved path through the provided array of Vector3s with Handles.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Vector3s with Handles.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3s[]"/>
@@ -5921,7 +5921,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Vector3s with Handles.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Vector3s with Handles.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Vector3s[]"/>
@@ -5936,14 +5936,14 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Transforms with Handles.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Transforms with Handles.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
 	/// </param>
 	public static void DrawPathHandles(Transform[] path) {
 		if(path.Length>0){
-			//create and store path points:
+			//create and store levelConfigPath points:
 			Vector3[] suppliedPath = new Vector3[path.Length];
 			for (int i = 0; i < path.Length; i++) {
 				suppliedPath[i]=path[i].position;
@@ -5954,7 +5954,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/// <summary>
-	/// Draws a curved path through the provided array of Transforms with Handles.DrawLine().
+	/// Draws a curved levelConfigPath through the provided array of Transforms with Handles.DrawLine().
 	/// </summary>
 	/// <param name="path">
 	/// A <see cref="Transform[]"/>
@@ -5964,7 +5964,7 @@ public class iTween : MonoBehaviour{
 	/// </param> 
 	public static void DrawPathHandles(Transform[] path,Color color) {
 		if(path.Length>0){
-			//create and store path points:
+			//create and store levelConfigPath points:
 			Vector3[] suppliedPath = new Vector3[path.Length];
 			for (int i = 0; i < path.Length; i++) {
 				suppliedPath[i]=path[i].position;
@@ -6646,7 +6646,7 @@ public class iTween : MonoBehaviour{
 			if(method == "gizmos"){
 				Gizmos.DrawLine(currPt, prevPt);
 			}else if(method == "handles"){
-				Debug.LogError("iTween Error: Drawing a path with Handles is temporarily disabled because of compatability issues with Unity 2.6!");
+				Debug.LogError("iTween Error: Drawing a levelConfigPath with Handles is temporarily disabled because of compatability issues with Unity 2.6!");
 				//UnityEditor.Handles.DrawLine(currPt, prevPt);
 			}
 			prevPt = currPt;
@@ -6657,10 +6657,10 @@ public class iTween : MonoBehaviour{
 		Vector3[] suppliedPath;
 		Vector3[] vector3s;
 		
-		//create and store path points:
+		//create and store levelConfigPath points:
 		suppliedPath = path;
 
-		//populate calculate path;
+		//populate calculate levelConfigPath;
 		int offset = 2;
 		vector3s = new Vector3[suppliedPath.Length+offset];
 		Array.Copy(suppliedPath,0,vector3s,1,suppliedPath.Length);
@@ -7455,8 +7455,8 @@ public class iTween : MonoBehaviour{
 	public static void moveFrom(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveFrom() has been renamed to MoveFrom().");}
 	public static void moveFromWorld(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveFromWorld() has been deprecated. Please investigate MoveFrom().");}
 	public static void moveTo(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveTo() has been renamed to MoveTo().");}
-	public static void moveToBezier(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToBezier() has been deprecated. Please investigate MoveTo() and the "path" property.");}
-	public static void moveToBezierWorld(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToBezierWorld() has been deprecated. Please investigate MoveTo() and the "path" property.");}
+	public static void moveToBezier(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToBezier() has been deprecated. Please investigate MoveTo() and the "levelConfigPath" property.");}
+	public static void moveToBezierWorld(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToBezierWorld() has been deprecated. Please investigate MoveTo() and the "levelConfigPath" property.");}
 	public static void moveToUpdate(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToUpdate() has been renamed to MoveUpdate().");}
 	public static void moveToUpdateWorld(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToUpdateWorld() has been deprecated. Please investigate MoveUpdate().");}
 	public static void moveToWorld(GameObject target, Hashtable args){Debug.LogError("iTween Error: moveToWorld() has been deprecated. Please investigate MoveTo().");}

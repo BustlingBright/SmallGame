@@ -60,8 +60,8 @@ public class GunControl : MonoBehaviour {
                 {
                     if (hitInfo.collider.tag == "Enemy")
                     {
-                        hitInfo.collider.GetComponent<FCtrl>().Hurt();
-                        GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(10);
+                        hitInfo.collider.GetComponent<FCtrl>().Hurt(ConfigManger.Instance.GetRoleConfig("player").skill1Attack);
+                        GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(ConfigManger.Instance.GetRoleConfig(hitInfo.collider.name).monsterScore);
                     }
                 }
             }

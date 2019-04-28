@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-struct Config
+struct LevelConfig
 {
     public int id;
     public string mapName;
@@ -17,6 +17,21 @@ struct Config
     public Vector3 mapCameraPosition;
     public Vector3 doorPosition;
 }
+class RoleConfig
+{
+    public string roleName;
+    public int hp;
+    public int skill1Attack;
+    public bool isChunGe;//无敌
+    public int skill2ShowTime;
+    public int skill2Attack;
+    public int skill2CD;
+    public int skill3ShowTime;
+    public int skill3CD;
+    public int monsterScore;
+
+}
+
 
 
 class ConfigManger
@@ -34,8 +49,10 @@ class ConfigManger
         }
     }
 
-    private string path = "levelConfig.txt";
-    Dictionary<int, Config> config = new Dictionary<int, Config>();
+    private string levelConfigPath = "levelConfig.txt";
+    private string roleConfigPath = "RoleConfig.txt";
+    Dictionary<int, LevelConfig> levelConfig = new Dictionary<int, LevelConfig>();
+    Dictionary<string, RoleConfig> roleConfig = new Dictionary<string, RoleConfig>();
 
     private ConfigManger() {
         Init();
@@ -43,14 +60,14 @@ class ConfigManger
 
     void Init()
     {
-        if (File.Exists(path))
+        if (File.Exists(levelConfigPath))
         {
-            StreamReader sr = new StreamReader(path);
+            StreamReader sr = new StreamReader(levelConfigPath);
             string str;
             while ((str= sr.ReadLine())!=null)
             {
                 string[] tempConfig = str.Split(new char[] { ' ' });
-                Config _config;
+                LevelConfig _config;
                 _config.id = int.Parse(tempConfig[0]);
                 _config.mapName = tempConfig[1];
                 _config.playerPosition = new Vector3(float.Parse(tempConfig[2]), float.Parse(tempConfig[3]), float.Parse(tempConfig[4]));
@@ -62,18 +79,43 @@ class ConfigManger
                 _config.cameraLastRotation= new Vector3(float.Parse(tempConfig[20]), float.Parse(tempConfig[21]), float.Parse(tempConfig[22]));
                 _config.mapCameraPosition= new Vector3(float.Parse(tempConfig[23]), float.Parse(tempConfig[24]), float.Parse(tempConfig[25]));
                 _config.doorPosition= new Vector3(float.Parse(tempConfig[26]), float.Parse(tempConfig[27]), float.Parse(tempConfig[28]));
-                config.Add(_config.id, _config);
+                levelConfig.Add(_config.id, _config);
+            }
+        }
+
+        if(File.Exists(roleConfigPath))
+        {
+            StreamReader sr = new StreamReader(roleConfigPath);
+            string str;
+            while ((str = sr.ReadLine()) != null)
+            {
+                string[] tempConfig = str.Split(new char[] { ' ' });
+                RoleConfig _config=new RoleConfig();
+                _config.roleName = tempConfig[0];
+                _config.hp = int.Parse(tempConfig[1]);
+                _config.skill1Attack = int.Parse(tempConfig[2]);
+                _config.isChunGe = bool.Parse(tempConfig[3]);
+                
             }
         }
     }
 
-    public Config GetConfig(int id)
+    public LevelConfig GetLevelConfig(int id)
     {
-        if(config.ContainsKey(id))
+        if(levelConfig.ContainsKey(id))
         {
-            return config[id];
+            return levelConfig[id];
         }
-        return new Config();
+        return new LevelConfig();
+    }
+
+    public RoleConfig GetRoleConfig(string roleName)
+    {
+        if(roleConfig.ContainsKey(roleName))
+        {
+            return roleConfig[roleName];
+        }
+        return new RoleConfig();
     }
 
 }

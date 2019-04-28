@@ -66,7 +66,7 @@ namespace HutongGames.PlayMaker.Actions
 		{
 			path += transform.name;
 
-			//Debug.Log(path);
+			//Debug.Log(levelConfigPath);
 
 			if (position.Value)
 			{

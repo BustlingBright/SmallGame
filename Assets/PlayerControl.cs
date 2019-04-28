@@ -20,11 +20,14 @@ public class PlayerControl : MonoBehaviour {
     private Button _runButton;
     private GameObject _runButtonTopCd;
     private bool isPlayCD = false;
-    private float _cd = 5f;
-    private float _nowCd = 0f;
+    private float skill3CD;
+    private float skill3NowCD = 0f;
+    private float skill3ShowTime;
 
-    private float _skillCd = 20f;
-    private float _skillNowCd = 0f;
+    private float skill2CD;
+    private float skill2NowCD = 0f;
+    private float skill2ShowTime;
+
     private bool isSkillCd = false;
     private Button _skillButton;
     private GameObject _skillButtonCd;
@@ -60,7 +63,15 @@ public class PlayerControl : MonoBehaviour {
 
     void Start ()
     {
-        _hp = 5;
+        skill3CD = ConfigManger.Instance.GetRoleConfig("player").skill3CD;
+        skill3NowCD = 0;
+        skill3ShowTime = ConfigManger.Instance.GetRoleConfig("player").skill3ShowTime;
+        skill2CD = ConfigManger.Instance.GetRoleConfig("player").skill2CD;
+        skill2NowCD = 0;
+        skill2ShowTime = ConfigManger.Instance.GetRoleConfig("player").skill2ShowTime;
+
+
+        _hp = ConfigManger.Instance.GetRoleConfig("player").hp;
         _score = 0;
         _hpUI = transform.Find("Canvas111/Hp/hpUI").GetComponent<Image>();
         _personScoreUI = GameObject.Find("Canvas/Text").GetComponent<Text>();
@@ -89,7 +100,7 @@ public class PlayerControl : MonoBehaviour {
 
         _skillButton.onClick.AddListener(() =>
         {
-            _skillNowCd = 0;
+            skill2NowCD = 0;
             isSkillCd = true;
             isChangeSkill = true;
             _skillButton.gameObject.SetActive(false);
@@ -100,7 +111,7 @@ public class PlayerControl : MonoBehaviour {
 
         _runButton.onClick.AddListener(() =>
         {
-            _nowCd = 0;
+            skill3NowCD = 0;
             isPlayCD = true;
             fsm.SendEvent("Run");
         });
@@ -138,17 +149,17 @@ public class PlayerControl : MonoBehaviour {
     {
         if(other.tag=="Enemy")
         {
-            BeHurt();
+            BeHurt(ConfigManger.Instance.GetRoleConfig(other.name).skill1Attack);
         }
     }
 
 
-    void BeHurt()
+    void BeHurt(int attack)
     {
         if (_hp>1)
         {
-            _hp--;
-            _hpUI.fillAmount -= 0.2f;
+            _hp-=attack;
+            _hpUI.fillAmount = (float)_hp / ConfigManger.Instance.GetRoleConfig("player").hp;
             _hurtUI.SetActive(true);
             _hurtUI.GetComponent<Animation>().Play("play");
         }
@@ -162,15 +173,15 @@ public class PlayerControl : MonoBehaviour {
     void PlayRunCd()
     {
 
-        if (_nowCd < _cd)
+        if (skill3NowCD < skill3CD)
         {
             if (!_runButtonTopCd.activeSelf)
             {
                 _runButton.gameObject.SetActive(false);
                 _runButtonTopCd.SetActive(true);
             }
-            _nowCd += Time.deltaTime;
-            _runButtonTopCd.GetComponent<Image>().fillAmount = _nowCd / _cd;
+            skill3NowCD += Time.deltaTime;
+            _runButtonTopCd.GetComponent<Image>().fillAmount = skill3NowCD / skill3CD;
         }
         else
         {
@@ -192,21 +203,21 @@ public class PlayerControl : MonoBehaviour {
         if (isSkillCd)
         {
             ////////////////武器更换
-            _skillNowCd += Time.deltaTime;
-            if(_skillNowCd>10&&isChangeSkill)
+            skill2NowCD += Time.deltaTime;
+            if(skill2NowCD>skill2ShowTime&&isChangeSkill)
             {
                 isChangeSkill = false;
                 ChangeSkill(true);
             }
-            if (_skillNowCd > _skillCd)
+            if (skill2NowCD > skill2CD)
             {
-                _skillNowCd = 0;
+                skill2NowCD = 0;
                 _skillButton.gameObject.SetActive(true);
                 _skillButtonCd.SetActive(false);
             }
             else
             {
-                _skillButtonCd.GetComponent<Image>().fillAmount = _skillNowCd / _skillCd;
+                _skillButtonCd.GetComponent<Image>().fillAmount = skill2NowCD / skill2CD;
             }
         }
     }

@@ -36,7 +36,7 @@ namespace HutongGames.PlayMaker.Actions
 		[ActionSection("LookAt")]
 		[Tooltip("Whether or not the GameObject will orient to its direction of travel. False by default.")]
 		public FsmBool orientToPath;
-//		[Tooltip("For how much of a percentage (from 0 to 1) to look ahead on a path to influence how strict 'orienttopath' is and how much the object will anticipate each curve. 0 by default")]
+//		[Tooltip("For how much of a percentage (from 0 to 1) to look ahead on a levelConfigPath to influence how strict 'orienttopath' is and how much the object will anticipate each curve. 0 by default")]
 //		public FsmFloat lookAhead;
 		[Tooltip("A target object the GameObject will look at.")]
 		public FsmGameObject lookAtObject;

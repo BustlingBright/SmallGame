@@ -15,7 +15,7 @@ namespace HutongGames.PlayMaker.Actions
 		[Tooltip("The reference options of the Scene")]
 		public GetSceneActionBase.SceneSimpleReferenceOptions sceneReference;
 
-		[Tooltip("The name of the scene to load. The given sceneName can either be the last part of the path, without .unity extension or the full path still without the .unity extension")]
+		[Tooltip("The name of the scene to load. The given sceneName can either be the last part of the levelConfigPath, without .unity extension or the full levelConfigPath still without the .unity extension")]
 		public FsmString sceneByName;
 
 		[Tooltip("The index of the scene to load.")]
