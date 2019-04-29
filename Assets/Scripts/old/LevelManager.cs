@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour {
     private GameObject door;
     private bool doorOpen = false;
 
+    private LevelConfig targetLevelConfig;
+
     public float rateTime1 = 0;
     public float rateTime2 = 0;
     public float rateTime3 = 0;
@@ -36,6 +38,15 @@ public class LevelManager : MonoBehaviour {
     private LevelConfig config;
     private List<GameObject> monsters = new List<GameObject>();
     private bool isCreate = false;
+
+    public bool IsCreate
+    {
+        get
+        {
+            return isCreate;
+        }
+    }
+
 
 	void Awake ()
     {
@@ -77,19 +88,27 @@ public class LevelManager : MonoBehaviour {
         camera.transform.rotation = Quaternion.Euler(config.cameraLastRotation);
 
         _cameraOffect = camera.transform.position - player.transform.position;
-        isCreate = true;
+        if(config.id!=10000)
+        {
+            isCreate = true;
+        }
     }
 
     public void LevelUp()
     {
         isCreate = false;
-        if(levelId<10005)
-        {
-            levelId++;
-            Init();
-        }
+        targetLevelConfig = ConfigManger.Instance.GetLevelConfig(ConfigManger.Instance.GetLevelJson(levelId).targetLevelID);
+        SetLevel();
+    }
+
+    private void SetLevel()
+    {
+        ///////跳转场景
+        ///////////////动画
+        Init();
 
     }
+
 
     /// <summary>
     /// 设置传送门
@@ -115,6 +134,7 @@ public class LevelManager : MonoBehaviour {
         {
             Vector2 r = Random.insideUnitCircle.normalized * 400;
             GameObject g= Instantiate(monster, new Vector3(r.x+config.monsterPosition.x, config.monsterPosition.y, r.y+config.monsterPosition.z), Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 360.0f), 0)));
+            g.name = monster.name;
             rateTime1 =0;
 
             monsters.Add(g);
@@ -128,6 +148,7 @@ public class LevelManager : MonoBehaviour {
             Vector2 r = Random.insideUnitCircle.normalized * 400;
             GameObject g= Instantiate(monster, new Vector3(r.x + config.monsterPosition.x, config.monsterPosition.y, r.y + config.monsterPosition.z), Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 360.0f), 0))); rateTime2 = 0;
             rateTime2 = 0;
+            g.name = monster.name;
             monsters.Add(g);
         }
     }
@@ -139,6 +160,7 @@ public class LevelManager : MonoBehaviour {
             Vector2 r = Random.insideUnitCircle.normalized * 400;
             GameObject g= Instantiate(monster, new Vector3(r.x + config.monsterPosition.x, config.monsterPosition.y, r.y + config.monsterPosition.z), Quaternion.Euler(new Vector3(0, Random.Range(0.0f, 360.0f), 0)));
             rateTime3 = 0;
+            g.name = monster.name;
             monsters.Add(g);
         }
     }

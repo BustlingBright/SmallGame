@@ -9,7 +9,6 @@ public class GunControl : MonoBehaviour {
     private float _cdTime = 0.5f;
     private float _nowTime = 0f;
     private AudioSource _audio;
-    //子弹预制体
 
     Ray _hitRay;
 
@@ -45,32 +44,34 @@ public class GunControl : MonoBehaviour {
 
 	void Update ()
     {
-        if (_nowTime < _cdTime)
+        if(LevelManager.Instance.IsCreate)
         {
-            _nowTime += Time.deltaTime;
-            if (_nowTime > 0.1f)
+            if (_nowTime < _cdTime)
             {
-                _gunPointPartic.SetActive(false);
+                _nowTime += Time.deltaTime;
+                if (_nowTime > 0.1f)
+                {
+                    _gunPointPartic.SetActive(false);
+                }
+                else
+                {
+                    RaycastHit hitInfo;
+                    _hitRay = new Ray(_gunPoint.position, _gunPoint.forward * 800);
+                    if (Physics.Raycast(_hitRay, out hitInfo))
+                    {
+                        if (hitInfo.collider.tag == "Enemy")
+                        {
+                            hitInfo.collider.GetComponent<FCtrl>().Hurt(ConfigManger.Instance.GetRoleConfig("player").skill1Attack);
+                        }
+                    }
+                }
+
             }
             else
             {
-                RaycastHit hitInfo;
-                _hitRay = new Ray(_gunPoint.position, _gunPoint.forward * 800);
-                if (Physics.Raycast(_hitRay, out hitInfo))
-                {
-                    if (hitInfo.collider.tag == "Enemy")
-                    {
-                        hitInfo.collider.GetComponent<FCtrl>().Hurt(ConfigManger.Instance.GetRoleConfig("player").skill1Attack);
-                        GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(ConfigManger.Instance.GetRoleConfig(hitInfo.collider.name).monsterScore);
-                    }
-                }
+                _nowTime = 0;
+                GunFire();
             }
-
-        }
-        else
-        {
-            _nowTime = 0;
-            GunFire();
         }
        
     }

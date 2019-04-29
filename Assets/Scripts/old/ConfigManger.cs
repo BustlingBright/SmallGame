@@ -23,14 +23,20 @@ class RoleConfig
     public int hp;
     public int skill1Attack;
     public bool isChunGe;//无敌
-    public int skill2ShowTime;
+    public int skill2ShowTime;  //技能二锤子
     public int skill2Attack;
     public int skill2CD;
-    public int skill3ShowTime;
+    public int skill3ShowTime;  //技能三加速
     public int skill3CD;
     public int monsterScore;
-
 }
+
+class LevelSetJson
+{
+    public int nowtargetID;
+    public int targetLevelID;
+}
+
 
 
 
@@ -50,9 +56,11 @@ class ConfigManger
     }
 
     private string levelConfigPath = "levelConfig.txt";
-    private string roleConfigPath = "RoleConfig.txt";
+    private string roleConfigPath = "roleConfig.txt";
+    private string levelSetPath = "levelSet.json";
     Dictionary<int, LevelConfig> levelConfig = new Dictionary<int, LevelConfig>();
     Dictionary<string, RoleConfig> roleConfig = new Dictionary<string, RoleConfig>();
+    Dictionary<int, LevelSetJson> levelSetConfig = new Dictionary<int, LevelSetJson>();
 
     private ConfigManger() {
         Init();
@@ -60,6 +68,18 @@ class ConfigManger
 
     void Init()
     {
+        if(File.Exists(levelSetPath))
+        {
+            StreamReader sr = new StreamReader(levelSetPath);
+            string str;
+            while ((str = sr.ReadLine()) != null)
+            {
+                LevelSetJson temp = JsonUtility.FromJson(str, typeof(LevelSetJson)) as LevelSetJson;
+                levelSetConfig.Add(temp.nowtargetID, temp);
+            }
+            sr.Dispose();
+        }
+
         if (File.Exists(levelConfigPath))
         {
             StreamReader sr = new StreamReader(levelConfigPath);
@@ -81,6 +101,7 @@ class ConfigManger
                 _config.doorPosition= new Vector3(float.Parse(tempConfig[26]), float.Parse(tempConfig[27]), float.Parse(tempConfig[28]));
                 levelConfig.Add(_config.id, _config);
             }
+            sr.Dispose();
         }
 
         if(File.Exists(roleConfigPath))
@@ -95,7 +116,13 @@ class ConfigManger
                 _config.hp = int.Parse(tempConfig[1]);
                 _config.skill1Attack = int.Parse(tempConfig[2]);
                 _config.isChunGe = bool.Parse(tempConfig[3]);
-                
+                _config.skill2ShowTime = int.Parse(tempConfig[4]);
+                _config.skill2Attack= int.Parse(tempConfig[5]);
+                _config.skill2CD= int.Parse(tempConfig[6]);
+                _config.skill3ShowTime= int.Parse(tempConfig[7]);
+                _config.skill3CD= int.Parse(tempConfig[8]);
+                _config.monsterScore= int.Parse(tempConfig[9]);
+                roleConfig.Add(_config.roleName, _config);
             }
         }
     }
@@ -116,6 +143,15 @@ class ConfigManger
             return roleConfig[roleName];
         }
         return new RoleConfig();
+    }
+
+    public LevelSetJson GetLevelJson(int nowLevelID)
+    {
+        if(levelSetConfig.ContainsKey(nowLevelID))
+        {
+            return levelSetConfig[nowLevelID];
+        }
+        return new LevelSetJson();
     }
 
 }

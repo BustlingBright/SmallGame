@@ -12,8 +12,6 @@ public class ball : MonoBehaviour {
 		if (coll.tag == "Enemy")
         {
             coll.GetComponent<FCtrl>().Hurt(ConfigManger.Instance.GetRoleConfig("player").skill2Attack);
-            GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(ConfigManger.Instance.GetRoleConfig(coll.name).monsterScore);
-
         }
 	}
 

@@ -33,6 +33,7 @@ public class FCtrl : MonoBehaviour {
         {
             Destroy(gameObject);
             Instantiate(blood, transform.position, Quaternion.identity);
+            GameObject.Find("PlayerBlue").GetComponent<PlayerControl>().ScoreAdd(ConfigManger.Instance.GetRoleConfig(gameObject.name).monsterScore);
         }
         else
         {

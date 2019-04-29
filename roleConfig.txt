@@ -1,0 +1,16 @@
+player 10 1 false 10 10 20 5 10 20
+jin0 1 1 false 0 0 0 0 0 10
+jin1 2 1 false 0 0 0 0 0 20
+jin2 3 1 false 0 0 0 0 0 40
+mu0 1 1 false 0 0 0 0 0 10
+mu1 2 1 false 0 0 0 0 0 20
+mu2 3 1 false 0 0 0 0 0 40
+shui0 1 1 false 0 0 0 0 0 10
+shui1 2 1 false 0 0 0 0 0 20
+shui2 3 1 false 0 0 0 0 0 40
+huo0 1 1 false 0 0 0 0 0 10
+huo1 2 1 false 0 0 0 0 0 20
+huo2 3 1 false 0 0 0 0 0 40
+tu0 1 1 false 0 0 0 0 0 10
+tu1 2 1 false 0 0 0 0 0 20
+tu2 3 1 false 0 0 0 0 0 40
